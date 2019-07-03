@@ -7,7 +7,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import ChatWindow from './ChatWindow';
-import launcherIcon from './../assets/logo-no-bg.svg';
+var launcherIcon = 'http://icons.iconarchive.com/icons/fasticon/creature-cutes/48/Creature-Blue-Pants-icon.png';
 import launcherIconActive from './../assets/close-icon.png';
 
 var Launcher = function (_Component) {

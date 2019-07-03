@@ -1,5 +1,5 @@
 /*!
- * react-beautiful-chat v1.0.0 - https://mattmezza.github.io/react-beautiful-chat/
+ * react-beautiful-chat v1.1.0 - https://mattmezza.github.io/react-beautiful-chat/
  * MIT Licensed
  */
 .sc-emoji-picker {
@@ -178,7 +178,7 @@
 
 .sc-launcher .sc-open-icon,
 .sc-launcher .sc-closed-icon {
-  width: 60px;
+  width: 1-0px;
   height: 60px;
   position: fixed;
   right: 25px;
@@ -352,7 +352,7 @@
 }
 
 .sc-message--avatar {
-  background-image: url(https://d13yacurqjgara.cloudfront.net/assets/avatar-default-aa2eab7684294781f93bc99ad394a0eb3249c5768c21390163c9f55ea8ef83a4.gif);
+  background-image: url(http://icons.iconarchive.com/icons/fasticon/creature-cutes/48/Creature-Blue-Pants-icon.png);
   background-repeat: no-repeat;
   background-size: 100%;
   background-position: center;
@@ -383,8 +383,8 @@
 }
 
 .sc-message--content.received .sc-message--text {
-  color: #263238;
-  background-color: #f4f7f9;
+  color: #f7f7f7;
+  background-color: #263238;
   margin-right: 40px;
 }
 
@@ -475,7 +475,7 @@
   font-size: xx-small;
   margin-bottom: -10px;
   color: white;
-  text-align: center;
+  text-align: right;
 }
 
 @media (max-width: 450px) {

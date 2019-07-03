@@ -10,11 +10,11 @@ class Message extends Component {
   _renderMessageOfType(type) {
     switch (type) {
       case 'text':
-        return <TextMessage message={this.props.message} onDelete={this.props.onDelete} />
+        return <TextMessage message={this.props.message} />
       case 'emoji':
         return <EmojiMessage {...this.props.message} />
       case 'file':
-        return <FileMessage onDelete={this.props.onDelete} message={this.props.message} />
+        return <FileMessage message={this.props.message} />
     }
   }
 

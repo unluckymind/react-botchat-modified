@@ -28,9 +28,9 @@ var MessageList = function (_Component) {
       { className: 'sc-message-list', ref: function ref(el) {
           return _this2.scrollList = el;
         } },
-      this.props.messages.map(function (message, i) {
+      this.props.messages.length > 1 ? this.props.messages.map(function (message, i) {
         return React.createElement(Message, { message: message, key: i, onDelete: _this2.props.onDelete });
-      })
+      }) : ""
     );
   };
 

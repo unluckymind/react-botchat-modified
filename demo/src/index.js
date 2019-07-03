@@ -1,14 +1,11 @@
+import messageHistory from './messageHistory';
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Launcher } from '../../src'
-import messageHistory from './messageHistory';
 import TestArea from './TestArea';
-import Header from './Header';
-import Footer from './Footer';
-import Highlight from "react-highlight.js";
 import './../assets/styles'
 
-
+import axios from 'axios'
 
 class Demo extends Component {
 
@@ -17,20 +14,43 @@ class Demo extends Component {
     this.state = {
       messageList: messageHistory,
       newMessagesCount: 0,
-      isOpen: false
+      isOpen: false,
+      datas: '',
+      times: ''
     };
     this.lastId = messageHistory[messageHistory.length - 1].id
   }
 
-  _onMessageWasSent(message) {
+  _onMessageWasSent(message, time) {    
     this.setState({
-      messageList: [...this.state.messageList, {id: this.lastId + 1, ...message}]
+      messageList: [...this.state.messageList, {id: this.lastId + 1, ...message, time}]
+    }, () => {
+      axios.get('http://localhost:8000/botman', {
+        params: {
+          driver: "web",
+          userId: "1234",
+          message: message.data.text
+        }
+        }).then(res => {
+          console.log('hasil', this.state)
+          const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
+          this.setState({
+            newMessagesCount: newMessagesCount,
+            datas: res.data,
+            messageList: [...this.state.messageList, {
+              id: this.lastId + 1,
+              author: 'them',
+              type: res.data.messages[0].type,
+              data: res.data.messages[res.data.messages.length-1],
+              time: time
+            }]
+          })
+        })
+        this.lastId += 1
     })
-    this.lastId += 1
   }
 
-  _sendMessage(text) {
-    if (text.length > 0) {
+  _sendMessage(text = this.state.messageList[this.state.messageList.length-1].data.text) {
       const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
       this.setState({
         newMessagesCount: newMessagesCount,
@@ -38,11 +58,10 @@ class Demo extends Component {
           id: this.lastId + 1,
           author: 'them',
           type: 'text',
-          data: { text }
+          data: {text}
         }]
       })
       this.lastId += 1
-    }
   }
 
   _handleClick() {
@@ -52,24 +71,16 @@ class Demo extends Component {
     })
   }
 
-  onKeyPress = (userInput) => {
-    console.log(userInput)
-  }
-
-  onDelete = (msg) => {
-    this.setState({messageList: this.state.messageList.filter(({id}) => id!==msg.id)})
-  }
-
   render() {
     return <div>
-      <Header />
+      {/* <Header /> */}
       <TestArea
         onMessage={this._sendMessage.bind(this)}
       />
       <Launcher
         agentProfile={{
-          teamName: 'react-beautiful-chat',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+          teamName: 'Hana ChatBot',
+          imageUrl: 'http://icons.iconarchive.com/icons/fasticon/creature-cutes/48/Creature-Blue-Pants-icon.png'
         }}
         onMessageWasSent={this._onMessageWasSent.bind(this)}
         messageList={this.state.messageList}
@@ -82,7 +93,7 @@ class Demo extends Component {
         showFile
       />
       <div style={{height: 200}} />
-      <Footer />
+      {/* <Footer /> */}
     </div>
   }
 }

@@ -10,8 +10,22 @@ class ChatWindow extends Component {
     super(props)
   }
 
-  onUserInputSubmit = (message) => {
-    this.props.onUserInputSubmit(message)
+  time() {
+    var today = new Date()
+    var minutes = today.getMinutes().toString()
+    var hours = today.getHours().toString()
+    if(minutes.length == 1){
+      minutes = '0' + minutes
+    }
+    if(hours.length == 1){
+      hours = '0' + hours
+    }
+    var date = hours + ":" + minutes
+    return date
+  }
+
+  onUserInputSubmit = (message, time = this.time()) => {
+    this.props.onUserInputSubmit(message, time)
   }
 
   onMessageReceived(message) {

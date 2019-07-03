@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Message from './Messages'
-
 class MessageList extends Component {
 
   componentDidUpdate(prevProps, prevState) {
@@ -10,9 +9,9 @@ class MessageList extends Component {
   render () {
     return (
       <div className="sc-message-list" ref={el => this.scrollList = el}>
-        {this.props.messages.map((message, i) => {
-          return <Message message={message} key={i} onDelete={this.props.onDelete} />
-        })}
+        {this.props.messages.length > 1 ? this.props.messages.map((message, i) => {
+          return <Message message={message} key={i} />
+        }) : ""}
       </div>)
   }
 }
