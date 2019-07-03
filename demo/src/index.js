@@ -64,6 +64,11 @@ class Demo extends Component {
       this.lastId += 1
   }
 
+  onKeyPress = (userInput) => {
+    console.log(userInput)
+  }
+
+
   _handleClick() {
     this.setState({
       isOpen: !this.state.isOpen,
