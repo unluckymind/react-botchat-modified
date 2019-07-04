@@ -6,11 +6,11 @@ import launcherIconActive from './../assets/close-icon.png';
 
 class Launcher extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
       launcherIcon,
-      isOpen: false
+      isOpen: false,
     };
   }
 
@@ -40,6 +40,7 @@ class Launcher extends Component {
         <ChatWindow
           messageList={this.props.messageList}
           onUserInputSubmit={this.props.onMessageWasSent}
+          onMessageWasReceived={this.props.onMessageReceived}
           agentProfile={this.props.agentProfile}
           isOpen={isOpen}
           onClose={this.handleClick.bind(this)}
@@ -65,6 +66,7 @@ const MessageCount = (props) => {
 
 Launcher.propTypes = {
   onMessageWasReceived: PropTypes.func,
+  onMessageReceived: PropTypes.func,
   onMessageWasSent: PropTypes.func,
   newMessagesCount: PropTypes.number,
   isOpen: PropTypes.bool,

@@ -69,6 +69,11 @@ class UserInput extends Component {
       data: { emoji }
     })
   }
+  
+  onChange = (value) => {
+    console.log(value)
+    return value
+  }
 
   _handleFileSubmit(file) {
     this.setState({ file })
@@ -96,6 +101,7 @@ class UserInput extends Component {
             onKeyPress={this.handleKeyPress}
             contentEditable="true"
             placeholder="Tanyakan sesuatu..."
+            onChange={this.onChange}
             className="sc-user-input--text"
           >
           </div>

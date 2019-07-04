@@ -8,64 +8,50 @@ import './../assets/styles'
 import axios from 'axios'
 
 class Demo extends Component {
-
   constructor() {
-    super();
+    super()
     this.state = {
       messageList: messageHistory,
-      newMessagesCount: 0,
       isOpen: false,
       datas: '',
-      times: ''
-    };
+      times: '',
+      isLoading: 0
+    }
     this.lastId = messageHistory[messageHistory.length - 1].id
   }
 
-  _onMessageWasSent(message, time) {    
+  _onMessageWasSent(message, time) {  
     this.setState({
-      messageList: [...this.state.messageList, {id: this.lastId + 1, ...message, time}]
-    }, () => {
-      axios.get('http://localhost:8000/botman', {
-        params: {
-          driver: "web",
-          userId: "1234",
-          message: message.data.text
-        }
-        }).then(res => {
-          console.log('hasil', this.state)
-          const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
-          this.setState({
-            newMessagesCount: newMessagesCount,
-            datas: res.data,
-            messageList: [...this.state.messageList, {
+      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time }]
+    },
+    () => { 
+        axios.get('http://localhost:8000/botman', {
+          params: {
+            driver: "web",
+            userId: "1234",
+            message: message.data.text
+          }
+        })
+        .then(res => 
+          {
+            const data = {
               id: this.lastId + 1,
               author: 'them',
               type: res.data.messages[0].type,
               data: res.data.messages[res.data.messages.length-1],
               time: time
-            }]
+            }
+            this.setState({
+              datas: res.data,
+              messageList: [...this.state.messageList, data]
+            })
           })
-        })
-        this.lastId += 1
-    })
-  }
-
-  _sendMessage(text = this.state.messageList[this.state.messageList.length-1].data.text) {
-      const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
-      this.setState({
-        newMessagesCount: newMessagesCount,
-        messageList: [...this.state.messageList, {
-          id: this.lastId + 1,
-          author: 'them',
-          type: 'text',
-          data: {text}
-        }]
-      })
-      this.lastId += 1
+        }
+      )
   }
 
   onKeyPress = (userInput) => {
-    console.log(userInput)
+    console.log('is typing...')
   }
 
 
@@ -80,7 +66,7 @@ class Demo extends Component {
     return <div>
       {/* <Header /> */}
       <TestArea
-        onMessage={this._sendMessage.bind(this)}
+        // onMessage={this._sendMessage.bind(this)}
       />
       <Launcher
         agentProfile={{
@@ -88,6 +74,7 @@ class Demo extends Component {
           imageUrl: 'http://icons.iconarchive.com/icons/fasticon/creature-cutes/48/Creature-Blue-Pants-icon.png'
         }}
         onMessageWasSent={this._onMessageWasSent.bind(this)}
+        onMessageReceived={this.props.onMessageReceived}
         messageList={this.state.messageList}
         newMessagesCount={this.state.newMessagesCount}
         handleClick={this._handleClick.bind(this)}

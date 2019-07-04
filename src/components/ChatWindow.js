@@ -28,8 +28,10 @@ class ChatWindow extends Component {
     this.props.onUserInputSubmit(message, time)
   }
 
-  onMessageReceived(message) {
-    this.setState({ messages: [...this.state.messages, message] })
+  onMessageReceived = (message) => {
+    this.props.onMessageReceived(message)
+    // console.log('rec: ',message)
+    /// this.setState({ messages: [...this.state.messages, message] })
   }
 
   render() {
@@ -46,6 +48,7 @@ class ChatWindow extends Component {
           onClose={this.props.onClose}
         />
         <MessageList
+          onMessageReceived={this.onMessageReceived}
           messages={messageList}
           imageUrl={this.props.agentProfile.imageUrl}
           onDelete={this.props.onDelete}
