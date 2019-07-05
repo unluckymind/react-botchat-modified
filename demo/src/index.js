@@ -22,7 +22,7 @@ class Demo extends Component {
 
   _onMessageWasSent(message, time) {  
     this.setState({
-      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time, load: true }]
+      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time }]
     },
     () => { 
         axios.get('http://localhost:8000/botman', {
@@ -40,12 +40,13 @@ class Demo extends Component {
               type: res.data.messages[0].type,
               data: res.data.messages[res.data.messages.length-1],
               time: time,
-              load: false
+              image: res.data.messages[0].attachment ? res.data.messages[0].attachment.url : ""
             }
             this.setState({
               datas: res.data,
               messageList: [...this.state.messageList, data]
             })
+          console.log('res: ', res)
           })
         }
       )
