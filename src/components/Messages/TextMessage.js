@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './loading.css'
-// import chatIconUrl from './../../assets/chat-icon.svg';
 
 class TextMessage extends Component {
   constructor(props) {
@@ -15,18 +14,6 @@ class TextMessage extends Component {
     }
   }
 
-  // shouldComponentUpdate(a, b){
-  //   if(b.onHittingApi){
-  //     return true
-  //   }else{
-  //     return false
-  //   }
-  // }
-
-  // componentDidUpdate(prevProp){
-
-  // }
-
   componentDidMount(){
     setTimeout( () => { 
       if(this.state.loading){
@@ -36,7 +23,7 @@ class TextMessage extends Component {
   }
 
   render(){
-    const {text, author, time, showloader, onHittingApi, loading} = this.state
+    const {text, author, time, showloader} = this.state
     return(
         !showloader && author == "them" ? <span className="loading"></span> : 
         <div className="sc-message--text">{text}
