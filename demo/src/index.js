@@ -22,7 +22,7 @@ class Demo extends Component {
 
   _onMessageWasSent(message, time) {  
     this.setState({
-      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time }]
+      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time, load: true }]
     },
     () => { 
         axios.get('http://localhost:8000/botman', {
@@ -39,7 +39,8 @@ class Demo extends Component {
               author: 'them',
               type: res.data.messages[0].type,
               data: res.data.messages[res.data.messages.length-1],
-              time: time
+              time: time,
+              load: false
             }
             this.setState({
               datas: res.data,
@@ -51,7 +52,7 @@ class Demo extends Component {
   }
 
   onKeyPress = (userInput) => {
-    console.log('is typing...')
+   return null;
   }
 
 
@@ -79,10 +80,10 @@ class Demo extends Component {
         newMessagesCount={this.state.newMessagesCount}
         handleClick={this._handleClick.bind(this)}
         isOpen={this.state.isOpen}
-        onKeyPress={this.onKeyPress}
         onDelete={this.onDelete}
         showEmoji
         showFile
+        onKeyPress={this.onKeyPress}
       />
       <div style={{height: 200}} />
       {/* <Footer /> */}
