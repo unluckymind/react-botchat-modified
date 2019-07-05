@@ -49,10 +49,12 @@
 }
 
 .sc-message--content.received .sc-message--text {
-  color: #f7f7f7;
-  background-color: #263238;
+  color: #222;
+  background-color: "transparent";
   margin-right: 40px;
+  margin-left: -20px
 }
+
 
 .sc-message--file {
   border-radius: 6px;
@@ -137,11 +139,19 @@
   font-size: 40px;
 }
 
-.sc-message--meta {
+.sc-message--meta-mine {
   font-size: xx-small;
   margin-bottom: -10px;
-  color: white;
+  color: #fff;
+  margin-top: -10px;
   text-align: right;
+}
+.sc-message--meta-them {
+  font-size: xx-small;
+  margin-top: -1px;
+  margin-left: 5px;
+  color: #222;
+  text-align: left;
 }
 
 @media (max-width: 450px) {
