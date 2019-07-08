@@ -3,6 +3,7 @@ import genericFileIcon from '../../assets/file.svg';
 import closeIcon from '../../assets/close.svg'
 
 const FileMessage = (props) => {
+
   const meta = props.message.data.meta || null
   const text = props.message.data.text || ''
   const file = props.message.data.file

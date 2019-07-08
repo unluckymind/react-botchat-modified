@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './loading.css'
 
-
 class TextMessage extends Component {
   constructor(props) {
     super(props)
@@ -11,10 +10,15 @@ class TextMessage extends Component {
       text: this.props.message.data.text || '',
       author: this.props.message.author,
       time: this.props.message.time,
-      onHittingApi: this.props.message.load,
       image: this.props.message.image,
+      //this is for api that has an actions
+      actions: [...this.props.message.data.actions],
+      callback_id: this.props.message.data.callback_id,
+      type: this.props.message.data.type,
       zoom: '0'
-    }
+    }                   
+    console.log('data hitting: ', this.props.message)
+    console.log('actions state: ', this.state)
   }
 
   componentDidMount(){
@@ -36,7 +40,6 @@ class TextMessage extends Component {
   render(){
     const {text, author, time, showloader, image, zoom} = this.state
     const stylish = { cursor: "pointer", transition: "0.2s", delay: '0.2s'}
-    
     return(
         !showloader && author == "them" ? <span className="loading"></span> : 
         <div className="sc-message--text">
