@@ -2,7 +2,6 @@ import messageHistory from './messageHistory';
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Launcher } from '../../src'
-import TestArea from './TestArea';
 import './../assets/styles'
 
 import axios from 'axios'
@@ -12,8 +11,8 @@ class Demo extends Component {
     super()
     this.state = {
       messageList: messageHistory,
+      newActions: [],
       isOpen: false,
-      datas: '',
       times: '',
       isLoading: 0
     }
@@ -24,7 +23,7 @@ class Demo extends Component {
     this.setState({
       messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time }]
     },
-    () => { 
+    () => {
         axios.get('http://localhost:8000/botman', {
           params: {
             driver: "web",
@@ -37,16 +36,15 @@ class Demo extends Component {
             const data = {
               id: this.lastId + 1,
               author: 'them',
-              type: res.data.messages[0].type,
+              type: res.data.messages[res.data.messages.length-1].type ? res.data.messages[res.data.messages.length-1].type : "text" ,
               data: res.data.messages[res.data.messages.length-1],
               time: time,
-              image: res.data.messages[0].attachment ? res.data.messages[0].attachment.url : ""
+              image: res.data.messages[res.data.messages.length-1].attachment ? res.data.messages[res.data.messages.length-1].attachment.url : "",
             }
             this.setState({
-              datas: res.data,
-              messageList: [...this.state.messageList, data]
+              messageList: [...this.state.messageList, data],
+              newActions: data
             })
-          console.log('res: ', res)
           })
         }
       )
@@ -65,11 +63,8 @@ class Demo extends Component {
   }
 
   render() {
+    console.log('test')
     return <div>
-      {/* <Header /> */}
-      <TestArea
-        // onMessage={this._sendMessage.bind(this)}
-      />
       <Launcher
         agentProfile={{
           teamName: 'Hana ChatBot',
@@ -87,7 +82,6 @@ class Demo extends Component {
         onKeyPress={this.onKeyPress}
       />
       <div style={{height: 200}} />
-      {/* <Footer /> */}
     </div>
   }
 }

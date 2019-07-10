@@ -24,13 +24,12 @@ class ChatWindow extends Component {
     return date
   }
 
-  onUserInputSubmit = (message, time = this.time()) => {
-    this.props.onUserInputSubmit(message, time)
+  onUserInputSubmit = (message, time = this.time(), actions) => {
+    this.props.onUserInputSubmit(message, time, )
   }
 
   onMessageReceived = (message) => {
-    this.props.onMessageReceived(message)
-    // console.log('rec: ',message)
+   this.props.onMessageReceived(message)
     /// this.setState({ messages: [...this.state.messages, message] })
   }
 

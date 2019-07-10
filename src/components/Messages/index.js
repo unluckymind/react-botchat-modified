@@ -9,16 +9,19 @@ class Message extends Component {
 
   _renderMessageOfType(type) {
     switch (type) {
+      case 'actions':
+        return <TextMessage message={this.props.message}/>
       case 'text':
         return <TextMessage message={this.props.message} />
       case 'emoji':
         return <EmojiMessage {...this.props.message} />
       case 'file':
-        return <FileMessage message={this.props.message} />
+        return <FileMessage message={this.props.message} datas={this.props.datas}/>
     }
   }
 
   render() {
+    console.log('parent: ', this.props)
     let contentClassList = [
       "sc-message--content",
       (this.props.message.author === "me" ? "sent" : "received")
