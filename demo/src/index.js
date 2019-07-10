@@ -36,7 +36,7 @@ class Demo extends Component {
             const data = {
               id: this.lastId + 1,
               author: 'them',
-              type: res.data.messages[res.data.messages.length-1].type ? res.data.messages[res.data.messages.length-1].type : "" ,
+              type: res.data.messages[res.data.messages.length-1].type ? res.data.messages[res.data.messages.length-1].type : "text" ,
               data: res.data.messages[res.data.messages.length-1],
               time: time,
               image: res.data.messages[res.data.messages.length-1].attachment ? res.data.messages[res.data.messages.length-1].attachment.url : "",
@@ -63,6 +63,7 @@ class Demo extends Component {
   }
 
   render() {
+    console.log('test')
     return <div>
       <Launcher
         agentProfile={{
