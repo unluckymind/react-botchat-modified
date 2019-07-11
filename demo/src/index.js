@@ -63,7 +63,6 @@ class Demo extends Component {
   }
 
   render() {
-    console.log('test')
     return <div>
       <Launcher
         agentProfile={{

@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import '../../styles/index'
 import './loading.css'
 
-var Carousel = require('react-responsive-carousel').Carousel;
+import SimpleImageSlider from "react-simple-image-slider";
+
 
 import axios from 'axios'
 
@@ -65,6 +66,10 @@ class TextMessage extends Component {
       }
     })
     .then(res => this.setState({datas: res.data.messages}, () => console.log('hit data: ', res)))
+	}
+	
+	goTo = (where) => {
+		console.log('i will direct to: ', where)
   }
 
   buttonLoad() {
@@ -80,13 +85,13 @@ class TextMessage extends Component {
   }
 
   render(){
-    const {text, author, time, showloader, image, zoom, type, datas} = this.state
-    const stylish = { cursor: "pointer", transition: "0.2s", delay: '0.2s'}
+		const {text, author, time, showloader, image, zoom, type, datas} = this.state
+		const stylish = { cursor: "pointer", transition: "0.2s", delay: '0.2s'}
 
-    const urls = {
-      content_A: 'https://www.steinmart.com/images/gateway/2019/06/19-06-24-Dresses-Hero-xs.png' ,
-      content_B: 'https://cdn.shopify.com/s/files/1/0053/2899/4419/files/flashsale.jpg?1505'
-    }
+    const images_ = [
+      {url: 'https://www.steinmart.com/images/gateway/2019/06/19-06-24-Dresses-Hero-xs.png'} ,
+			{url: 'https://cdn.shopify.com/s/files/1/0053/2899/4419/files/flashsale.jpg?1505'}
+		]
     return(
         !showloader && author == "them" ? <span className="loading" /> : 
         <div className="sc-message--text">
@@ -99,13 +104,25 @@ class TextMessage extends Component {
           <div>
             {
               datas.map((data, i) => {
+								// const images = [
+								// 	{url:data.attachment.url}
+								// ]
                 return <div key={i}>
-                <p>{data.text}</p>
-                <div style={zoom == "0" && data.attachment ? {border: "2px solid #f7f7f7"} : null }>
+                <div style={zoom == "0" && data.attachment ? {border: "2px solid #f7f7f7", marginTop:10} : null }>
                   <center style={{padding: 5, margin: 1}}>
-                    {data.attachment.type=="image" ? 
+									<p style={{marginTop: "-0px"}}><small>{data.text}</small></p>
+									<SimpleImageSlider
+                    width={235}
+										height={200}
+										showNavs={false}
+										useGPURender={true}
+										slideDuration={0.8}
+                    images={images_}
+                />
+								 <button className="buttonCarousel" onClick={() =>  this.handleChoice(data.text)}>pilih</button>
+                    {/* {data.attachment.type=="image" ? 
                       <img src={data.attachment.url} width={zoom == "0" ? "60%" : zoom} height={zoom == "0" ? "60%" : zoom} onClick={this.handleClick} style={stylish}/>
-                    : ""}
+                    : ""} */}
                   </center>
                 </div>
               </div>

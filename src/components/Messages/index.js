@@ -21,7 +21,6 @@ class Message extends Component {
   }
 
   render() {
-    console.log('parent: ', this.props)
     let contentClassList = [
       "sc-message--content",
       (this.props.message.author === "me" ? "sent" : "received")
