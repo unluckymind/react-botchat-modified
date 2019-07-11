@@ -1,9 +1,9 @@
 export default [
   {
-    id: null,
-    author: '',
-    type: '',
-    text: '',
+    id: 0,
+    author: 'them',
+    type: 'text',
+    text: 'Hai, saya Hana, asisten virtual Halosis. Ada yang bisa saya bantu?',
     attachment: {
       type: '',
       url: '',

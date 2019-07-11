@@ -71,7 +71,6 @@ class UserInput extends Component {
   }
   
   onChange = (value) => {
-    console.log(value)
     return value
   }
 
