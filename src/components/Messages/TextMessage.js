@@ -64,7 +64,7 @@ class TextMessage extends Component {
         message: value
       }
     })
-    .then(res => this.setState({datas: res.data.messages}))
+    .then(res => this.setState({datas: res.data.messages}, () => console.log('hit data: ', res)))
   }
 
   buttonLoad() {
@@ -80,7 +80,7 @@ class TextMessage extends Component {
   }
 
   render(){
-    const {text, author, time, showloader, image, zoom, type, userChoice, datas} = this.state
+    const {text, author, time, showloader, image, zoom, type, datas} = this.state
     const stylish = { cursor: "pointer", transition: "0.2s", delay: '0.2s'}
 
     const urls = {
@@ -101,7 +101,14 @@ class TextMessage extends Component {
               datas.map((data, i) => {
                 return <div key={i}>
                 <p>{data.text}</p>
+                <div style={zoom == "0" && data.attachment ? {border: "2px solid #f7f7f7"} : null }>
+                  <center style={{padding: 5, margin: 1}}>
+                    {data.attachment.type=="image" ? 
+                      <img src={data.attachment.url} width={zoom == "0" ? "60%" : zoom} height={zoom == "0" ? "60%" : zoom} onClick={this.handleClick} style={stylish}/>
+                    : ""}
+                  </center>
                 </div>
+              </div>
               })
             }
           </div>) : ""}
