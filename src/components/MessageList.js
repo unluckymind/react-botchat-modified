@@ -6,12 +6,13 @@ class MessageList extends Component {
     this.scrollList.scrollTop = this.scrollList.scrollHeight;
   }
 
-  render () {
+  render() {
     console.log('List Of Messages: ', this.props)
     return (
       <div className="sc-message-list" ref={el => this.scrollList = el}>
         {this.props.messages.length > 0 ? this.props.messages.map((message, i) => {
-          return <Message message={message} key={i}/> 
+          console.log('a', message)
+          return <Message message={message} key={i} />
         }) : ""}
       </div>)
   }

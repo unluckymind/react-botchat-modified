@@ -10,18 +10,19 @@ class TextMessage extends Component {
     this.state = {
       loading: true,
       showloader: false,
-      text: this.props.message.data.text || '',
+      text: !this.props.message.data ? this.props.message.text : this.props.message.data.text,
       author: this.props.message.author,
       time: this.props.message.time,
       image: this.props.message.image,
       //this is for api that has an actions
-      actions: [...this.props.message.data.actions],
-      callback_id: this.props.message.data.callback_id,
-      type: this.props.message.data.type,
+      actions: !this.props.message.data ? "" : [...this.props.message.data.actions],
+      callback_id: !this.props.message.data ? "" : this.props.message.data.callback_id,
+      type: !this.props.message.data ? "" : this.props.message.data.type,
       //end
       zoom: '0',
       datas: []
     }
+    console.log('prop: ', this.props.message)
   }
 
   componentDidMount() {
@@ -29,7 +30,7 @@ class TextMessage extends Component {
       if (this.state.loading) {
         this.setState({ showloader: true })
       }
-    }, 5000)
+    }, 3500)
   }
 
   buttonLoad() {
