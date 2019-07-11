@@ -22,7 +22,6 @@ class TextMessage extends Component {
       zoom: '0',
       datas: []
     }
-    console.log('prop: ', this.props.message)
   }
 
   componentDidMount() {
@@ -128,7 +127,7 @@ class TextMessage extends Component {
         message: value
       }
     })
-      .then(res => this.setState({ datas: res.data.messages }, () => console.log('hit data: ', res)))
+      .then(res => this.setState({ datas: res.data.messages }))
   }
 
   goTo = (where) => {

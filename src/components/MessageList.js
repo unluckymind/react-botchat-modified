@@ -7,11 +7,9 @@ class MessageList extends Component {
   }
 
   render() {
-    console.log('List Of Messages: ', this.props)
     return (
       <div className="sc-message-list" ref={el => this.scrollList = el}>
         {this.props.messages.length > 0 ? this.props.messages.map((message, i) => {
-          console.log('a', message)
           return <Message message={message} key={i} />
         }) : ""}
       </div>)
