@@ -19,11 +19,11 @@ class Demo extends Component {
     this.lastId = messageHistory[messageHistory.length - 1].id
   }
 
-  _onMessageWasSent(message, time) {  
+  _onMessageWasSent(message, time) {
     this.setState({
-      messageList: [...this.state.messageList,{ id: this.lastId + 1, ...message, time }]
+      messageList: [...this.state.messageList, { id: this.lastId + 1, ...message, time }]
     },
-    () => {
+      () => {
         axios.get('http://localhost:8000/botman', {
           params: {
             driver: "web",
@@ -31,27 +31,26 @@ class Demo extends Component {
             message: message.data.text
           }
         })
-        .then(res => 
-          {
+          .then(res => {
             const data = {
               id: this.lastId + 1,
               author: 'them',
-              type: res.data.messages[res.data.messages.length-1].type ? res.data.messages[res.data.messages.length-1].type : "text" ,
-              data: res.data.messages[res.data.messages.length-1],
+              type: res.data.messages[res.data.messages.length - 1].type ? res.data.messages[res.data.messages.length - 1].type : "text",
+              data: res.data.messages[res.data.messages.length - 1],
               time: time,
-              image: res.data.messages[res.data.messages.length-1].attachment ? res.data.messages[res.data.messages.length-1].attachment.url : "",
+              image: res.data.messages[res.data.messages.length - 1].attachment ? res.data.messages[res.data.messages.length - 1].attachment.url : "",
             }
             this.setState({
               messageList: [...this.state.messageList, data],
               newActions: data
             })
           })
-        }
-      )
+      }
+    )
   }
 
   onKeyPress = (userInput) => {
-   return null;
+    return null;
   }
 
 
@@ -80,7 +79,7 @@ class Demo extends Component {
         showFile
         onKeyPress={this.onKeyPress}
       />
-      <div style={{height: 200}} />
+      <div style={{ height: 200 }} />
     </div>
   }
 }
