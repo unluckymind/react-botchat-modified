@@ -22,7 +22,6 @@ class TextMessage extends Component {
       zoom: '0',
       datas: []
     }
-    console.log('prop: ', this.props.message)
   }
 
   componentDidMount() {
@@ -80,8 +79,8 @@ class TextMessage extends Component {
                       {/*carousel*/}
                       {data.attachment ?
                         (<div><SimpleImageSlider
-                          width={235}
-                          height={200}
+                          width={255}
+                          height={225}
                           showNavs={false}
                           useGPURender={true}
                           slideDuration={0.8}
@@ -112,14 +111,6 @@ class TextMessage extends Component {
     )
   }
 
-  handleZoomImage = () => {
-    const { zoom } = this.state
-    zoom == "0" ?
-      this.setState({ zoom: "140%" })
-      :
-      this.setState({ zoom: "0" })
-  }
-
   handleChoiceMenu = (value) => {
     axios.get('http://localhost:8000/botman', {
       params: {
@@ -128,7 +119,15 @@ class TextMessage extends Component {
         message: value
       }
     })
-      .then(res => this.setState({ datas: res.data.messages }, () => console.log('hit data: ', res)))
+      .then(res => this.setState({ datas: res.data.messages }))
+  }
+
+  handleZoomImage = () => {
+    const { zoom } = this.state
+    zoom == "0" ?
+      this.setState({ zoom: "140%" })
+      :
+      this.setState({ zoom: "0" })
   }
 
   goTo = (where) => {
