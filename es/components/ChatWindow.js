@@ -19,11 +19,19 @@ var ChatWindow = function (_Component) {
     var _this = _possibleConstructorReturn(this, _Component.call(this, props));
 
     _this.onUserInputSubmit = function (message) {
-      _this.props.onUserInputSubmit(message);
+      var time = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : _this.time();
+
+      _this.props.onUserInputSubmit(message, time);
     };
 
     return _this;
   }
+
+  ChatWindow.prototype.time = function time() {
+    var today = new Date();
+    var date = today.getHours() + ":" + today.getMinutes();
+    return date;
+  };
 
   ChatWindow.prototype.onMessageReceived = function onMessageReceived(message) {
     this.setState({ messages: [].concat(this.state.messages, [message]) });

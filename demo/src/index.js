@@ -1,49 +1,58 @@
+import messageHistory from './messageHistory';
 import React, { Component } from 'react'
 import { render } from 'react-dom'
 import { Launcher } from '../../src'
-import messageHistory from './messageHistory';
-import TestArea from './TestArea';
-import Header from './Header';
-import Footer from './Footer';
-import Highlight from "react-highlight.js";
 import './../assets/styles'
 
-
+import axios from 'axios'
 
 class Demo extends Component {
-
   constructor() {
-    super();
+    super()
     this.state = {
       messageList: messageHistory,
-      newMessagesCount: 0,
-      isOpen: false
-    };
+      newActions: [],
+      isOpen: false,
+      times: '',
+      isLoading: 0
+    }
     this.lastId = messageHistory[messageHistory.length - 1].id
   }
 
-  _onMessageWasSent(message) {
+  _onMessageWasSent(message, time) {
     this.setState({
-      messageList: [...this.state.messageList, {id: this.lastId + 1, ...message}]
-    })
-    this.lastId += 1
+      messageList: [...this.state.messageList, { id: this.lastId + 1, ...message, time }]
+    },
+      () => {
+        axios.get('http://localhost:8000/botman', {
+          params: {
+            driver: "web",
+            userId: "1234",
+            message: message.data.text
+          }
+        })
+          .then(res => {
+            const data = {
+              id: this.lastId + 1,
+              author: 'them',
+              type: res.data.messages[res.data.messages.length - 1].type ? res.data.messages[res.data.messages.length - 1].type : "text",
+              data: res.data.messages[res.data.messages.length - 1],
+              time: time,
+              image: res.data.messages[res.data.messages.length - 1].attachment ? res.data.messages[res.data.messages.length - 1].attachment.url : "",
+            }
+            this.setState({
+              messageList: [...this.state.messageList, data],
+              newActions: data
+            })
+          })
+      }
+    )
   }
 
-  _sendMessage(text) {
-    if (text.length > 0) {
-      const newMessagesCount = this.state.isOpen ? this.state.newMessagesCount : this.state.newMessagesCount + 1
-      this.setState({
-        newMessagesCount: newMessagesCount,
-        messageList: [...this.state.messageList, {
-          id: this.lastId + 1,
-          author: 'them',
-          type: 'text',
-          data: { text }
-        }]
-      })
-      this.lastId += 1
-    }
+  onKeyPress = (userInput) => {
+    return null;
   }
+
 
   _handleClick() {
     this.setState({
@@ -52,37 +61,25 @@ class Demo extends Component {
     })
   }
 
-  onKeyPress = (userInput) => {
-    console.log(userInput)
-  }
-
-  onDelete = (msg) => {
-    this.setState({messageList: this.state.messageList.filter(({id}) => id!==msg.id)})
-  }
-
   render() {
     return <div>
-      <Header />
-      <TestArea
-        onMessage={this._sendMessage.bind(this)}
-      />
       <Launcher
         agentProfile={{
-          teamName: 'react-beautiful-chat',
-          imageUrl: 'https://a.slack-edge.com/66f9/img/avatars-teams/ava_0001-34.png'
+          teamName: 'Hana ChatBot',
+          imageUrl: 'http://icons.iconarchive.com/icons/fasticon/creature-cutes/48/Creature-Blue-Pants-icon.png'
         }}
         onMessageWasSent={this._onMessageWasSent.bind(this)}
+        onMessageReceived={this.props.onMessageReceived}
         messageList={this.state.messageList}
         newMessagesCount={this.state.newMessagesCount}
         handleClick={this._handleClick.bind(this)}
         isOpen={this.state.isOpen}
-        onKeyPress={this.onKeyPress}
         onDelete={this.onDelete}
         showEmoji
         showFile
+        onKeyPress={this.onKeyPress}
       />
-      <div style={{height: 200}} />
-      <Footer />
+      <div style={{ height: 200 }} />
     </div>
   }
 }
