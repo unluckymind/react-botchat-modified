@@ -20,6 +20,7 @@ class Demo extends Component {
   }
 
   _onMessageWasSent(message, time) {
+    console.log('msg was sent: ', message)
     this.setState({
       messageList: [...this.state.messageList, { id: this.lastId + 1, ...message, time }]
     },
@@ -28,14 +29,14 @@ class Demo extends Component {
           params: {
             driver: "web",
             userId: "1234",
-            message: message.data.text
+            message: message.data.text || message.data.file.name
           }
         })
           .then(res => {
             const data = {
               id: this.lastId + 1,
               author: 'them',
-              type: res.data.messages[res.data.messages.length - 1].type ? res.data.messages[res.data.messages.length - 1].type : "text",
+              type: res.data.messages[res.data.messages.length - 1].type ? res.data.messages[res.data.messages.length - 1].type : "file",
               data: res.data.messages[res.data.messages.length - 1],
               time: time,
               image: res.data.messages[res.data.messages.length - 1].attachment ? res.data.messages[res.data.messages.length - 1].attachment.url : "",
