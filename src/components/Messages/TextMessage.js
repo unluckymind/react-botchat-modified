@@ -22,6 +22,7 @@ class TextMessage extends Component {
       zoom: '0',
       datas: []
     }
+    console.log('prop from txt message: ', this.props)
   }
 
   componentDidMount() {
