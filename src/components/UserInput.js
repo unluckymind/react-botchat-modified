@@ -16,7 +16,8 @@ class UserInput extends Component {
     super()
     this.state = {
       inputActive: false,
-      file: null
+      file: null,
+      preview: null,
     }
   }
 
@@ -87,13 +88,20 @@ class UserInput extends Component {
     this.setState({ file })
   }
 
+  fileHandler = event => {
+    this.setState({
+      file: event,
+      preview: URL.createObjectURL(event)
+    });
+  }
+
   render() {
     return (
       <div>
         {
           this.state.file &&
           <div className='file-container' >
-            <span className='icon-file-message'><img src={genericFileIcon} alt='genericFileIcon' height={15} /></span>
+            <span className='icon-file-message'><img src={this.state.preview} alt='preview' height={15} /></span>
             {this.state.file && this.state.file.name}
             <span className='delete-file-message' onClick={() => this.setState({ file: null })} ><img src={closeIcon} alt='close icon' height={10} title='Remove the file' /></span>
           </div>
@@ -120,7 +128,7 @@ class UserInput extends Component {
             </div>
             {this.props.showFile &&
               <div className="sc-user-input--button">
-                <FileIcons onChange={(file) => this._handleFileSubmit(file)} />
+                <FileIcons onChange={this.fileHandler} />
               </div>
             }
             <div className="sc-user-input--button">
