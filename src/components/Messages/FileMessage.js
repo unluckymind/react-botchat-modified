@@ -13,17 +13,9 @@ const FileMessage = (props) => {
   const fileType = props.message.type
   const time = props.message.time
   const image = URL.createObjectURL(file)
+
   return (
     <div className='sc-message--file' style={{ minWidth: "50%", background: "transparent", border: "2px solid #f7f7f7" }}>
-      {
-        props.message &&
-        author === "me" &&
-        props.onDelete &&
-        <button className='delete-message' onClick={() => props.onDelete(props.message)}>
-          x
-          </button>
-      }
-
       <div style={{ padding: 10, margin: 2 }}>
         <a href={file.url || '#'} target='_blank'>
           <img src={image} alt={name} width="200px" height="150px" />
