@@ -20,7 +20,7 @@
     "gh:publish": "nwb build-demo && gh-pages -d demo/dist"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "emoji-js": "3.2.2",
     "gh-pages": "^1.1.0",
     "lodash": "^4.17.5",
