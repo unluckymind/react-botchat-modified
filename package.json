@@ -27,13 +27,13 @@
     "prop-types": "15.5.10",
     "react-responsive-carousel": "^3.1.49",
     "react-simple-image-slider": "^1.0.2",
-    "socket.io-client": "2.0.3"
+    "socket.io-client": "2.5.0"
   },
   "peerDependencies": {
     "react": "15.x"
   },
   "devDependencies": {
-    "nwb": "0.17.x",
+    "nwb": "0.25.x",
     "react": "15.6.1",
     "react-dom": "15.6.1"
   },
